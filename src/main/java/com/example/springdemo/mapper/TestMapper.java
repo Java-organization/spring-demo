@@ -12,6 +12,7 @@ import org.mapstruct.ReportingPolicy;
 public interface TestMapper {
 
     @Mapping(target = "fullName",expression = "java(testEntity.getName()+\" \"+testEntity.getSurname())")
+    @Mapping(target = "gender",source = "gender.name")
     TestResponse toTestResponse(TestEntity testEntity);
     List<TestResponse> toTestResponses(List<TestEntity> testEntities);
 

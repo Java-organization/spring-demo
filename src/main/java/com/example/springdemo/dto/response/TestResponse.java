@@ -21,4 +21,7 @@ public class TestResponse {
     String phoneNumber;
 
     String gmail;
+
+    String gender;
+
 }

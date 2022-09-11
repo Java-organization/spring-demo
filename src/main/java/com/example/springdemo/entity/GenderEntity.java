@@ -1,12 +1,11 @@
 package com.example.springdemo.entity;
 
-
-import com.sun.istack.NotNull;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,23 +22,15 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "test")
-public class TestEntity {
+@Table(name = "gender")
+public class GenderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String message;
-
-    @NotNull
     String name;
 
-    String surname;
+    @OneToMany(mappedBy = "gender")
+    List<TestEntity> tests;
 
-    String phoneNumber;
-
-    String gmail;
-
-    @ManyToOne
-    GenderEntity gender;
 }
