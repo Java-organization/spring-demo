@@ -1,13 +1,14 @@
 package com.example.springdemo.entity;
 
 
-import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,9 +32,10 @@ public class TestEntity {
 
     String message;
 
-    @NotNull
+    @NotNull(message = "name must not be null")
     String name;
 
+    @NotEmpty(message = "name must not be null")
     String surname;
 
     String phoneNumber;

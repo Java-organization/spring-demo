@@ -1,5 +1,6 @@
 package com.example.springdemo.mapper;
 
+import com.example.springdemo.dto.request.RequestDto;
 import com.example.springdemo.dto.response.TestResponse;
 import com.example.springdemo.entity.TestEntity;
 import java.util.List;
@@ -16,5 +17,5 @@ public interface TestMapper {
     TestResponse toTestResponse(TestEntity testEntity);
     List<TestResponse> toTestResponses(List<TestEntity> testEntities);
 
-
+    TestEntity toTestEntity(RequestDto dto);
 }

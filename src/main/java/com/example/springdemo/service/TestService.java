@@ -1,10 +1,14 @@
 package com.example.springdemo.service;
 
 import com.example.springdemo.controller.TestController;
+import com.example.springdemo.dto.request.RequestDto;
 import com.example.springdemo.dto.response.TestResponse;
+import com.example.springdemo.entity.GenderEntity;
 import com.example.springdemo.entity.TestEntity;
+import com.example.springdemo.exception.UniquePhoneNumber;
 import com.example.springdemo.logger.MainLogger;
 import com.example.springdemo.mapper.TestMapper;
+import com.example.springdemo.repository.GenderRepository;
 import com.example.springdemo.repository.TestRepository;
 import java.util.List;
 import lombok.AccessLevel;
@@ -20,6 +24,8 @@ public class TestService {
     MainLogger log = MainLogger.getLogger(TestController.class);
     final TestRepository testRepository;
 
+    final GenderRepository genderRepository;
+
     final TestMapper testMapper;
 
     public TestResponse getTest(Long id) {
@@ -34,12 +40,17 @@ public class TestService {
     }
 
     @SneakyThrows
-    public void saveTest(TestEntity t) {
-        boolean exists = testRepository.existsByPhoneNumber(t.getPhoneNumber());
+    public void saveTest(RequestDto requestDto) {
+        TestEntity testEntity=testMapper.toTestEntity(requestDto);
+        if(requestDto.getGenderId()==1 || requestDto.getGenderId()==2){
+           GenderEntity genderEntity= genderRepository.findById(requestDto.getGenderId()).get();
+            testEntity.setGender(genderEntity);
+        }
+        boolean exists = testRepository.existsByPhoneNumber(requestDto.getPhoneNumber());
         if (exists) {
             throw new Exception("This phoneNumber already exists");
         }
-        testRepository.save(t);
+        testRepository.save(testEntity);
     }
 
     @SneakyThrows
@@ -69,7 +80,7 @@ public class TestService {
                 .orElseThrow(() -> new Exception("User not found"));
         boolean exists = testRepository.existsByPhoneNumber(phoneNumber);
         if (exists) {
-            throw new Exception("This phone number already exists");
+            throw new UniquePhoneNumber("This phone number already exists");
         }
         test.setPhoneNumber(phoneNumber);
         return testRepository.save(test);

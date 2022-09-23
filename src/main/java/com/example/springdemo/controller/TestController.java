@@ -1,10 +1,12 @@
 package com.example.springdemo.controller;
 
+import com.example.springdemo.dto.request.RequestDto;
 import com.example.springdemo.dto.response.TestResponse;
 import com.example.springdemo.entity.TestEntity;
 import com.example.springdemo.logger.MainLogger;
 import com.example.springdemo.service.TestService;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +40,8 @@ public class TestController {
     }
 
     @PostMapping
-    void saveTest(@RequestBody TestEntity t)  {
-        testService.saveTest(t);
+    void saveTest(@Valid @RequestBody RequestDto requestDto)  {
+        testService.saveTest(requestDto);
     }
 
     @DeleteMapping("/{id}")
