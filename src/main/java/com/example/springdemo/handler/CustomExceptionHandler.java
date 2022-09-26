@@ -2,6 +2,8 @@ package com.example.springdemo.handler;
 
 import com.example.springdemo.dto.response.ErrorResponseDto;
 import com.example.springdemo.dto.response.ErrorResponseValid;
+import com.example.springdemo.exception.BadRequestException;
+import com.example.springdemo.exception.NotFoundException;
 import com.example.springdemo.exception.UniquePhoneNumber;
 import com.example.springdemo.logger.MainLogger;
 import java.util.HashMap;
@@ -59,7 +61,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         HttpStatus status;
         if (ex instanceof UniquePhoneNumber) {
             status = HttpStatus.ALREADY_REPORTED;
-        } else {
+        }
+        else if(ex instanceof NotFoundException){
+            status=HttpStatus.NOT_FOUND;
+        }
+        else if(ex instanceof BadRequestException){
+            status=HttpStatus.BAD_REQUEST;
+        }
+        else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
         }
         LOGGER.error("{} : {}", ex.getClass(), ex.getMessage());

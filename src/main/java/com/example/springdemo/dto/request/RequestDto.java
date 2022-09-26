@@ -23,7 +23,7 @@ public class RequestDto {
     @NotEmpty(message = "surname must not be null or empty")
     String surname;
 
-    @Pattern(regexp = "([0-9][0-9][0-9])+",message = "phone number only contain number")
+    @Pattern(regexp = "([0-9])+",message = "phone number only contain number")
     String phoneNumber;
 
     @Pattern(regexp = "(.+)@(.+)",message = "gmail must be correct regex")

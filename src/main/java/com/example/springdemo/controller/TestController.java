@@ -8,6 +8,8 @@ import com.example.springdemo.service.TestService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,7 +28,7 @@ public class TestController {
 
     // Get Post Delete Put  PROTOCOL
     private final TestService testService;
-    private MainLogger log=MainLogger.getLogger(TestService.class);
+    private MainLogger log = MainLogger.getLogger(TestService.class);
 
     @GetMapping
     List<TestResponse> getTests() {
@@ -34,29 +36,32 @@ public class TestController {
     }
 
     @GetMapping("/{id}")
-    TestResponse getTest(@PathVariable Long id) {
-        log.info("searching Test for id "+id);
-        return testService.getTest(id);
+    ResponseEntity<TestResponse> getTest(@PathVariable Long id) {
+        log.info("searching Test for id " + id);
+        TestResponse response = testService.getTest(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping
-    void saveTest(@Valid @RequestBody RequestDto requestDto)  {
+    ResponseEntity<Void> saveTest(@Valid @RequestBody RequestDto requestDto) {
         testService.saveTest(requestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{id}")
-    void deleteTest(@PathVariable Long id) {
-        log.warn("deleted Test for id {}",id);
+    ResponseEntity<Void> deleteTest(@PathVariable Long id) {
+        log.warn("deleted Test for id {}", id);
         testService.deleteTest(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping()
-    TestEntity updateTest(@RequestBody TestEntity testEntity)  {
-       return testService.updateTest(testEntity);
+    TestEntity updateTest(@RequestBody TestEntity testEntity) {
+        return testService.updateTest(testEntity);
     }
 
     @PatchMapping("/{id}")
-    TestEntity updatePhone(@PathVariable Long id,@RequestBody String phoneNumber) {
-        return testService.updatePhone(id,phoneNumber);
+    TestEntity updatePhone(@PathVariable Long id, @RequestBody String phoneNumber) {
+        return testService.updatePhone(id, phoneNumber);
     }
 }
