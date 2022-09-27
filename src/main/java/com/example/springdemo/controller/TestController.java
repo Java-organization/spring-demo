@@ -56,12 +56,12 @@ public class TestController {
     }
 
     @PutMapping()
-    TestEntity updateTest(@RequestBody TestEntity testEntity) {
+    TestResponse updateTest(@RequestBody TestEntity testEntity) {
         return testService.updateTest(testEntity);
     }
 
     @PatchMapping("/{id}")
-    TestEntity updatePhone(@PathVariable Long id, @RequestBody String phoneNumber) {
+    TestResponse updatePhone(@PathVariable Long id, @RequestBody String phoneNumber) {
         return testService.updatePhone(id, phoneNumber);
     }
 }

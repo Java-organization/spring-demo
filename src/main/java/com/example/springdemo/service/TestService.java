@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,15 +67,16 @@ public class TestService {
         return testMapper.toTestResponses(testEntities);
     }
 
-    public TestEntity updateTest(TestEntity testEntity) {
+    public TestResponse updateTest(TestEntity testEntity) {
         TestEntity dbEntity = testRepository.findById(testEntity.getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
         dbEntity.setName(testEntity.getName());
         dbEntity.setMessage(testEntity.getMessage());
-        return testRepository.save(dbEntity);
+       testEntity=testRepository.save(dbEntity);
+        return testMapper.toTestResponse(testEntity);
     }
 
-    public TestEntity updatePhone(Long id, String phoneNumber) {
+    public TestResponse updatePhone(Long id, String phoneNumber) {
         TestEntity test = testRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         boolean exists = testRepository.existsByPhoneNumber(phoneNumber);
@@ -82,6 +84,7 @@ public class TestService {
             throw new UniquePhoneNumber("This phone number already exists");
         }
         test.setPhoneNumber(phoneNumber);
-        return testRepository.save(test);
+        TestEntity testEntity=testRepository.save(test);
+        return testMapper.toTestResponse(testEntity);
     }
 }
