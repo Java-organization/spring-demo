@@ -17,6 +17,8 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Service;
 
@@ -62,9 +64,9 @@ public class TestService {
         testRepository.deleteById(id);
     }
 
-    public List<TestResponse> getTests() {
-        List<TestEntity> testEntities = testRepository.findAll();
-        return testMapper.toTestResponses(testEntities);
+    public Page<TestResponse> getTests(Pageable pageable) {
+        Page<TestEntity> testEntities = testRepository.findAll(pageable);
+        return testEntities.map(testMapper::toTestResponse);
     }
 
     public TestResponse updateTest(TestEntity testEntity) {

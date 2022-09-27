@@ -8,6 +8,8 @@ import com.example.springdemo.service.TestService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,8 +33,8 @@ public class TestController {
     private MainLogger log = MainLogger.getLogger(TestService.class);
 
     @GetMapping
-    List<TestResponse> getTests() {
-        return testService.getTests();
+    Page<TestResponse> getTests(int pageNumber,int pageSize) {
+        return testService.getTests(PageRequest.of(pageNumber,pageSize));
     }
 
     @GetMapping("/{id}")
