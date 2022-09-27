@@ -12,14 +12,11 @@ import com.example.springdemo.logger.MainLogger;
 import com.example.springdemo.mapper.TestMapper;
 import com.example.springdemo.repository.GenderRepository;
 import com.example.springdemo.repository.TestRepository;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.stereotype.Service;
 
 @Service
