@@ -42,6 +42,8 @@ public class TestEntity {
 
     String gmail;
 
+    String filePath;
+
     @ManyToOne
     GenderEntity gender;
 }

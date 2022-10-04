@@ -12,6 +12,7 @@ import com.example.springdemo.logger.MainLogger;
 import com.example.springdemo.mapper.TestMapper;
 import com.example.springdemo.repository.GenderRepository;
 import com.example.springdemo.repository.TestRepository;
+import com.example.springdemo.util.FileUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,6 +30,8 @@ public class TestService {
     final GenderRepository genderRepository;
 
     final TestMapper testMapper;
+
+    final FileUtil fileUtil;
 
     public TestResponse getTest(Long id) {
         TestEntity testEntity = null;
@@ -52,6 +55,8 @@ public class TestService {
         if (exists) {
             throw new UniquePhoneNumber("This phoneNumber already exists");
         }
+        String fileName=fileUtil.save(requestDto.getFile(),"/test/");
+        testEntity.setFilePath(fileName);
         testRepository.save(testEntity);
     }
 
