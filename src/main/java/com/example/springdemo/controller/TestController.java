@@ -45,7 +45,7 @@ public class TestController {
     }
 
     @PostMapping
-    ResponseEntity<Void> saveTest(@Valid @RequestBody RequestDto requestDto) {
+    ResponseEntity<Void> saveTest(@Valid RequestDto requestDto) {
         testService.saveTest(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

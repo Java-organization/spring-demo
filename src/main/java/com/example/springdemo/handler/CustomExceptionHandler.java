@@ -3,6 +3,7 @@ package com.example.springdemo.handler;
 import com.example.springdemo.dto.response.ErrorResponseDto;
 import com.example.springdemo.dto.response.ErrorResponseValid;
 import com.example.springdemo.exception.BadRequestException;
+import com.example.springdemo.exception.FileException;
 import com.example.springdemo.exception.NotFoundException;
 import com.example.springdemo.exception.UniquePhoneNumber;
 import com.example.springdemo.logger.MainLogger;
@@ -67,6 +68,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
         else if(ex instanceof BadRequestException){
             status=HttpStatus.BAD_REQUEST;
+        }
+        else if(ex instanceof FileException){
+            status=HttpStatus.INTERNAL_SERVER_ERROR;
         }
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;
