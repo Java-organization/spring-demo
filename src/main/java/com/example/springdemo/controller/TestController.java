@@ -8,6 +8,7 @@ import com.example.springdemo.service.TestService;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class TestController {
 
     // Get Post Delete Put  PROTOCOL
     private final TestService testService;
-    private MainLogger log = MainLogger.getLogger(TestService.class);
+    private final MainLogger log = MainLogger.getLogger(TestService.class);
 
     @GetMapping
     Page<TestResponse> getTests(int pageNumber,int pageSize) {

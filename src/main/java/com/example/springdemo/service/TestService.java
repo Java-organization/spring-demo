@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TestService {
-    MainLogger log = MainLogger.getLogger(TestController.class);
+    final MainLogger log = MainLogger.getLogger(TestController.class);
     final TestRepository testRepository;
 
     final GenderRepository genderRepository;
@@ -34,10 +34,8 @@ public class TestService {
     final FileUtil fileUtil;
 
     public TestResponse getTest(Long id) {
-        TestEntity testEntity = null;
-            testEntity = testRepository.findById(id)
+        TestEntity  testEntity = testRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Test not found for " + id + " ID"));
-
         return testMapper.toTestResponse(testEntity);
     }
 
@@ -45,7 +43,8 @@ public class TestService {
     public void saveTest(RequestDto requestDto) {
         TestEntity testEntity=testMapper.toTestEntity(requestDto);
         if(requestDto.getGenderId()==1 || requestDto.getGenderId()==2){
-           GenderEntity genderEntity= genderRepository.findById(requestDto.getGenderId()).get();
+           GenderEntity genderEntity= genderRepository.findById(requestDto.getGenderId())
+                           .orElseThrow(()->new NotFoundException("Gender not found"));
             testEntity.setGender(genderEntity);
         }
         else{

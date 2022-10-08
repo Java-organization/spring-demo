@@ -28,13 +28,12 @@ public class FileUtil {
 
             fileName=fileName+"test";
 
-            StringBuilder filePathBuilder = new StringBuilder()
-                    .append(rootPath)
-                    .append(filePath)
-                    .append(fileName)
-                    .append(fileFormat);
+            String filePathBuilder = rootPath +
+                    filePath +
+                    fileName +
+                    fileFormat;
 
-            Path path= Paths.get(filePathBuilder.toString());
+            Path path= Paths.get(filePathBuilder);
             byte[] bytes=file.getBytes();
             Files.write(path,bytes);
 
@@ -46,7 +45,7 @@ public class FileUtil {
 
     public void deleteFile(String path){
         try {
-            Files.delete(Path.of(rootPath+path));
+            Files.deleteIfExists(Path.of(rootPath+path));
         } catch (IOException e) {
             throw new FileException("File delete process is failed. filePath: "+rootPath+path);
         }
@@ -58,7 +57,7 @@ public class FileUtil {
     }
 
     private static String getRandomName() {
-        System.out.println(UUID.randomUUID().toString());
+        System.out.println(UUID.randomUUID());
         return UUID.randomUUID().toString().substring(0, 7).replace("-", "");
     }
 }
