@@ -62,6 +62,7 @@ public class TestService {
     public void deleteTest(Long id) {
         TestEntity dbEntity = testRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found"));
+        fileUtil.deleteFile("/test/"+dbEntity.getFilePath());
         testRepository.deleteById(id);
     }
 

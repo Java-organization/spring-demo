@@ -24,4 +24,6 @@ public class TestResponse {
 
     String gender;
 
+    String filePath;
+
 }

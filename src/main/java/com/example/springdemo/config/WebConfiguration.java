@@ -19,6 +19,8 @@ public class WebConfiguration implements WebMvcConfigurer, CommandLineRunner {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/file/test/**")
                 .addResourceLocations("file:"+rootPath+"/test/");
+        registry.addResourceHandler("/file/cv/**")
+                .addResourceLocations("file:"+rootPath+"/cv/");
     }
 
     @Override
