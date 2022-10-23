@@ -12,7 +12,7 @@ public class TestSchedule {
 
     private final TestRepository testRepository;
 
-    @Scheduled(fixedDelay = 1000 * 60)
+//    @Scheduled(fixedDelay = 1000 * 60)
     public void deleteTest() {
         try {
             testRepository.deleteById(5L);
