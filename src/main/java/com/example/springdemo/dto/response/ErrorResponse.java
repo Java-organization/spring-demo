@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 //@JsonInclude(JsonInclude.Include.NON_NULL)
-public class ErrorResponseValid {
+public class ErrorResponse {
 
     private String message;
     private Map<String, String> checks;
 
-    public ErrorResponseValid(String message) {
+    public ErrorResponse(String message) {
         this.message = message;
     }
 }

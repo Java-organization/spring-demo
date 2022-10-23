@@ -1,7 +1,7 @@
 package com.example.springdemo.handler;
 
 import com.example.springdemo.dto.response.ErrorResponseDto;
-import com.example.springdemo.dto.response.ErrorResponseValid;
+import com.example.springdemo.dto.response.ErrorResponse;
 import com.example.springdemo.exception.BadRequestException;
 import com.example.springdemo.exception.FileException;
 import com.example.springdemo.exception.NotFoundException;
@@ -41,7 +41,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             checks.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
-        ErrorResponseValid errorResponse = new ErrorResponseValid("Bad request", checks);
+        ErrorResponse errorResponse = new ErrorResponse("Bad request", checks);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
