@@ -18,15 +18,15 @@ public class WebConfiguration implements WebMvcConfigurer, CommandLineRunner {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/file/test/**")
-                .addResourceLocations("file:"+rootPath+"/test/");
+                .addResourceLocations("file:"+rootPath+"\\test\\");
         registry.addResourceHandler("/file/cv/**")
                 .addResourceLocations("file:"+rootPath+"/cv/");
     }
 
     @Override
     public void run(String... args) {
-        createFolder("/test");
-        createFolder("/cv");
+        createFolder("\\test");
+        createFolder("\\cv");
     }
 
     private void createFolder(String path) {

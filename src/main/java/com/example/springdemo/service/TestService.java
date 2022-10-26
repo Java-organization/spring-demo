@@ -71,13 +71,13 @@ public class TestService {
         return testEntities.map(testMapper::toTestResponse);
     }
 
-    public TestResponse updateTest(TestEntity testEntity) {
-        TestEntity dbEntity = testRepository.findById(testEntity.getId())
+    public TestResponse updateTest(RequestDto requestDto) {
+        TestEntity dbEntity = testRepository.findById(requestDto.getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
-        dbEntity.setName(testEntity.getName());
-        dbEntity.setMessage(testEntity.getMessage());
-       testEntity=testRepository.save(dbEntity);
-        return testMapper.toTestResponse(testEntity);
+        dbEntity.setName(requestDto.getName());
+        dbEntity.setMessage(requestDto.getMessage());
+        requestDto=testRepository.save(dbEntity);
+        return testMapper.toTestResponse((TestEntity) requestDto);
     }
 
     public TestResponse updatePhone(Long id, String phoneNumber) {
