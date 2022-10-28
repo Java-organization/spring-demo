@@ -33,4 +33,9 @@ public class RequestDto {
     Long genderId;
 
     MultipartFile file;
+
+    public Long getId() {
+
+        return genderId;
+    }
 }

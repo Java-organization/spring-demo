@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import com.example.springdemo.dto.request.RequestDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +29,7 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "test")
-public class TestEntity {
+public class TestEntity extends RequestDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
