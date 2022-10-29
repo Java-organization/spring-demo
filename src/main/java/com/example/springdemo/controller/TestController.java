@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,6 +35,7 @@ public class TestController {
     private final MainLogger log = MainLogger.getLogger(TestService.class);
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     Page<TestResponse> getTests(int pageNumber,int pageSize) {
         return testService.getTests(PageRequest.of(pageNumber,pageSize));
     }
@@ -45,7 +47,7 @@ public class TestController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     ResponseEntity<Void> saveTest(@Valid RequestDto requestDto) {
         testService.saveTest(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
