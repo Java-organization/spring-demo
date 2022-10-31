@@ -1,5 +1,6 @@
 package com.example.springdemo.dto.request;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -29,6 +30,10 @@ public class RequestDto {
 
     @Pattern(regexp = "(.+)@(.+)",message = "gmail must be correct regex")
     String gmail;
+
+    @NotBlank(message = "Password must not be empty")
+    @Size(min = 8,message = "Minimum 8 character must be entered")
+    String password;
 
     Long genderId;
 

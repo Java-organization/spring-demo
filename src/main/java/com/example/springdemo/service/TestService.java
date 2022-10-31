@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,6 +33,8 @@ public class TestService {
     final TestMapper testMapper;
 
     final FileUtil fileUtil;
+
+    final PasswordEncoder passwordEncoder;
 
     public TestResponse getTest(Long id) {
         TestEntity  testEntity = testRepository.findById(id)
@@ -56,6 +59,8 @@ public class TestService {
         }
         String fileName=fileUtil.save(requestDto.getFile(),"/test/");
         testEntity.setFilePath(fileName);
+        String password=passwordEncoder.encode(requestDto.getPassword());
+        testEntity.setPassword(password);
         testRepository.save(testEntity);
     }
 
@@ -76,7 +81,7 @@ public class TestService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
         dbEntity.setName(testEntity.getName());
         dbEntity.setMessage(testEntity.getMessage());
-       testEntity=testRepository.save(dbEntity);
+        testEntity=testRepository.save(dbEntity);
         return testMapper.toTestResponse(testEntity);
     }
 

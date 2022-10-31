@@ -2,6 +2,7 @@ package com.example.springdemo.handler;
 
 import com.example.springdemo.dto.response.ErrorResponseDto;
 import com.example.springdemo.dto.response.ErrorResponse;
+import com.example.springdemo.exception.AuthenticationException;
 import com.example.springdemo.exception.BadRequestException;
 import com.example.springdemo.exception.FileException;
 import com.example.springdemo.exception.NotFoundException;
@@ -71,6 +72,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
         else if(ex instanceof FileException){
             status=HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        else if(ex instanceof AuthenticationException){
+            status=HttpStatus.UNAUTHORIZED;
         }
         else {
             status = HttpStatus.INTERNAL_SERVER_ERROR;

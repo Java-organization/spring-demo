@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     TokenFilter tokenFilter;
@@ -32,9 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     AuthEntryPoint authEntryPoint;
 
     AccessDeniedMethodHandler accessDeniedMethodHandler;
+
     @Bean
-    public CorsConfigurationSource configurationSource(){
-        CorsConfiguration config=new CorsConfiguration();
+    public CorsConfigurationSource configurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(false);
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
@@ -45,8 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedMethod(HttpMethod.POST);
         config.addAllowedMethod(HttpMethod.DELETE);
         config.addAllowedMethod(HttpMethod.PATCH);
-        var source=new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**",config);
+        var source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 
@@ -71,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private final String[] permittedUrls = {
-      "/v1/api/test/signup"
+            "/v1/api/test/signup",
+            "/v1/api/auth/login"
     };
 
     private final String[] swaggerUrls = {
@@ -85,6 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     @Bean
-    PasswordEncoder passwordEncoder() {return  new BCryptPasswordEncoder();}
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }// IOC
 
 }

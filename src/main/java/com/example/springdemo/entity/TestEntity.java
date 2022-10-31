@@ -46,6 +46,8 @@ public class TestEntity {
 
     String filePath;
 
+    String password;
+
     @ManyToOne
     GenderEntity gender;
 

@@ -1,14 +1,16 @@
 package com.example.springdemo.controller;
 
+import static com.example.springdemo.constant.AuthRole.ROLE_ADMIN;
+import static com.example.springdemo.constant.AuthRole.ROLE_TEST;
+
+import com.example.springdemo.constant.AuthRole;
 import com.example.springdemo.dto.request.RequestDto;
 import com.example.springdemo.dto.response.TestResponse;
 import com.example.springdemo.entity.TestEntity;
 import com.example.springdemo.logger.MainLogger;
 import com.example.springdemo.service.TestService;
-import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -33,14 +35,14 @@ public class TestController {
     // Get Post Delete Put  PROTOCOL
     private final TestService testService;
     private final MainLogger log = MainLogger.getLogger(TestService.class);
-
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize(ROLE_ADMIN)
     Page<TestResponse> getTests(int pageNumber,int pageSize) {
         return testService.getTests(PageRequest.of(pageNumber,pageSize));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize(ROLE_TEST)
     ResponseEntity<TestResponse> getTest(@PathVariable Long id) {
         log.info("searching Test for id " + id);
         TestResponse response = testService.getTest(id);
@@ -54,6 +56,7 @@ public class TestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize(ROLE_ADMIN)
     ResponseEntity<Void> deleteTest(@PathVariable Long id) {
         log.warn("deleted Test for id {}", id);
         testService.deleteTest(id);
@@ -61,12 +64,15 @@ public class TestController {
     }
 
     @PutMapping()
+    @PreAuthorize(ROLE_TEST)
     TestResponse updateTest(@RequestBody TestEntity testEntity) {
         return testService.updateTest(testEntity);
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize(ROLE_TEST)
     TestResponse updatePhone(@PathVariable Long id, @RequestBody String phoneNumber) {
         return testService.updatePhone(id, phoneNumber);
     }
+
 }
