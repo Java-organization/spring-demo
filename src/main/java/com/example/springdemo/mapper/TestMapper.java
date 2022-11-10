@@ -21,7 +21,5 @@ public interface TestMapper {
 
     TestEntity toTestEntity(RequestDto dto);
     @Mapping(target = "gender",source = "gender.name")
-    LoginResponse toLoginReponse(TestEntity testEntity);
-
-
+    LoginResponse toLoginResponse(TestEntity testEntity);
 }

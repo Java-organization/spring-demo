@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] permittedUrls = {
             "/v1/api/test/signup",
-            "/v1/api/auth/login"
+            "/v1/api/auth/login",
+            "/v1/api/auth/login-admin"
     };
 
     private final String[] swaggerUrls = {
